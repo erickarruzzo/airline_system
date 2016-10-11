@@ -2,17 +2,16 @@ package airlinesystem.model.valueobject.enums;
 
 public enum SeatCategory 
 {
-    ECONOMY ("Classe economica"),
-
-    /**
-     *
-     */
-    FIRST_CLASS ("Primeira classe");
+    ECONOMY ("Classe economica",2),
+    EXECUTIVE("Classe executiva",4),
+    FIRST_CLASS ("Primeira classe",8);
     
-    private final String name;       
+    private final String name;   
+    private final int factor;
 
-    private SeatCategory(String s) {
-        name = s;
+    private SeatCategory(String s, int factor) {
+        this.name = s;
+        this.factor = factor;
     }
 
     public boolean equalsName(String otherName) {

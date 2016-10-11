@@ -1,6 +1,6 @@
 package airlinesystem.model.operations;
 
-import airlinesystem.model.valueobject.Order;
+import airlinesystem.model.entity.airline.Order;
 import java.util.List;
 
 public interface UserOperations extends GeneralOperations{

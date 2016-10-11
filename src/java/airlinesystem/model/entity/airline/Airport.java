@@ -3,12 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package airlinesystem.login;
+package airlinesystem.model.entity.airline;
 
 /**
  *
  * @author Henrique
  */
-public class WrongUserException {
-    
+public class Airport 
+{
+    private String name;
+    private String city;
 }

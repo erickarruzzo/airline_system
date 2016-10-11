@@ -1,7 +1,6 @@
-package airlinesystem.model.valueobject;
+package airlinesystem.model.entity.airline;
 
 import airlinesystem.model.entity.payment.Payment;
-import airlinesystem.model.entity.airline.Ticket;
 import airlinesystem.model.entity.user.User;
 import java.util.List;
 
@@ -12,16 +11,12 @@ public class Order
     private User user;
     private Payment payment;
     private int orderNumber;
-    private static int allOrderNumber = 0;
     
     public Order(List<Ticket> tickets, User user, Payment payment)
     {
-        allOrderNumber++;
-        this.orderNumber = allOrderNumber;
         this.tickets = tickets;
         this.user = user;
         this.payment = payment;
-        this.totalPrice = calcTotalPrice();
     }
     
     private double calcTotalPrice()

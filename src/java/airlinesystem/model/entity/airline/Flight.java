@@ -1,26 +1,31 @@
 package airlinesystem.model.entity.airline;
 
-import java.util.List;
+import airlinesystem.model.entity.seat.Seat;
 
+/*
+Classe voo esta relacionada ao ticket que um passageiro compra
+*/
 public class Flight 
-{
-    private List<RouteFlight> routes;
+{  
+    private int id;
+    private Route route;
     private int number;
+    private Seat seat;
     
-    public Flight(List<RouteFlight> routes, int number)
+    public Flight(Route route, int number)
     {
-        this.routes = routes;
+        this.route = route;
         this.number = number;
     }
 
-    public List<RouteFlight> getRoutes() 
+    public Route getRoutes() 
     {
-        return routes;
+        return this.route;
     }
 
-    public void setRoutes(List<RouteFlight> routes) 
+    public void setRoutes(Route route) 
     {
-        this.routes = routes;
+        this.route = route;
     }
 
     public int getNumber() 

@@ -1,8 +1,7 @@
 package airlinesystem.model.entity.passenger;
 
-import airlinesystem.model.entity.airline.Route;
 import airlinesystem.model.entity.airline.Ticket;
-import airlinesystem.model.operations.GeneralOperations;
+import airlinesystem.model.valueobject.enums.AgeCategory;
 import java.util.Date;
 import java.util.List;
 
@@ -12,9 +11,10 @@ public class Passenger
     private Date birth;
     private String address;
     private String cpf;
+    private String telephone;
+    private AgeCategory ageCategory;
     
     private List<Ticket> tickets;
-    
     
     public Passenger(String name, Date birth, String address, String cpf)
     {

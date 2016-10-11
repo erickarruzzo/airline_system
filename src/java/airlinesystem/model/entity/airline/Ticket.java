@@ -4,27 +4,27 @@ import airlinesystem.model.entity.passenger.Passenger;
 
 public class Ticket 
 {
-    private RouteFlight flight;
-    private double price;
+    private Flight flight;
+    private double finalPrice;
     private Passenger passenger;
     private int ticketNumber;
     
-    public Ticket(RouteFlight flight)
+    public Ticket(Flight flight)
     {
         this.flight = flight;
     }
     
     public double getPrice()
     {
-        return this.price;
+        return this.finalPrice;
     }
 
-    public RouteFlight getFlight() 
+    public Flight getFlight() 
     {
         return flight;
     }
 
-    public void setFlight(RouteFlight flight) 
+    public void setFlight(Flight flight) 
     {
         this.flight = flight;
     }

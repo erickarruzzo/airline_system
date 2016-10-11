@@ -1,7 +1,7 @@
 package airlinesystem.model.entity.user;
 
 
-import airlinesystem.model.valueobject.Order;
+import airlinesystem.model.entity.airline.Order;
 import java.util.List;
 
 public class User

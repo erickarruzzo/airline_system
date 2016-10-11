@@ -5,27 +5,23 @@ import java.util.GregorianCalendar;
 
 public class Route 
 {
-    private int routeId;
+    private int id;
     private Airplane airplane;
-    private String origin; //can become class airport
-    private String destiny;
+    private Airport origin; //can become class airport
+    private Airport destiny;
     private GregorianCalendar landTime;
     private GregorianCalendar flightTime;
-    private double price;//Should be multiplied by the weight of the Seat
+    private double price;//Base-price. Should be multiplied by the weight of the Seat
     private Period duration;
-    private boolean available;
     
-    public Route(int routeId, String origin, String destiny, GregorianCalendar flightTime, GregorianCalendar landTime, Airplane airplane)
+    public Route(int routeId, Airport origin, Airport destiny, GregorianCalendar flightTime, GregorianCalendar landTime, Airplane airplane)
     { 
-      this.routeId = routeId;
+      this.id = routeId;
       this.origin = origin;
       this.destiny = destiny;
       this.landTime = landTime;
       this.flightTime = flightTime;
-      this.available = true;
       this.airplane = airplane;
-      this.available = true;
-      //this.expectedFlightDuration = Period.between(flightTime, landTime);
     }
 
     public Airplane getAirplane() 
@@ -38,22 +34,22 @@ public class Route
         this.airplane = airplane;
     }
 
-    public String getOrigin() 
+    public Airport getOrigin() 
     {
         return origin;
     }
 
-    public void setOrigin(String origin) 
+    public void setOrigin(Airport origin) 
     {
         this.origin = origin;
     }
 
-    public String getDestiny() 
+    public Airport getDestiny() 
     {
         return destiny;
     }
 
-    public void setDestiny(String destiny) 
+    public void setDestiny(Airport destiny) 
     {
         this.destiny = destiny;
     }
@@ -100,25 +96,12 @@ public class Route
     
     public void setRouteId( int routeId )
     {
-        this.routeId = routeId;
+        this.id = routeId;
     }
     
     public int getRouteId()
     {
-        return this.routeId;
+        return this.id;
     }
 
-//    public boolean isAvailable() 
-//    {
-//        if (this.airplane.checkAvailableSeats() == null) 
-//        {
-//            this.available = false;
-//        }
-//        else
-//        {
-//            this.available = true;
-//        }
-//        
-//        return available;
-//    }
 }
