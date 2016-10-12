@@ -1,9 +1,9 @@
 package airlinesystem.persistence;
 
 import airlinesystem.model.entity.airline.Airplane;
+import airlinesystem.model.entity.airline.Airport;
 import airlinesystem.model.entity.airline.Flight;
 import airlinesystem.model.entity.airline.Route;
-import airlinesystem.model.entity.airline.RouteFlight;
 import airlinesystem.model.entity.seat.Seat;
 import airlinesystem.model.entity.user.User;
 import airlinesystem.model.exception.ExistantUsernameException;
@@ -22,14 +22,14 @@ public class SimulateDB
     
     public static List<User> users = new ArrayList<User>();
     
-    public List<List<Route>> getRoutes(String origin, String destiny, String date, boolean conexao, int tempoMax, List<Route> routes)
+    public List<Route> getRoutes(String origin, String destiny, String date, List<Route> routes)
     {
-        List<List<Route>> flights = new ArrayList<List<Route>>();
+        List<Route> routesFlight = new ArrayList<Route>();
         
         for (Route route : routes)
         {
-            String routeDestiny = route.getDestiny();
-            String routeOrigin = route.getOrigin();
+            String routeDestiny = route.getDestiny().getName();
+            String routeOrigin = route.getOrigin().getName();
             GregorianCalendar routeDayCalendar = route.getFlightTime();
             
             //transformar gregorianCalendar no formato dd/MM/YYYY
@@ -43,40 +43,12 @@ public class SimulateDB
             sb.append(routeDayCalendar.get(GregorianCalendar.YEAR));
             String routeDay = sb.toString();
             
-            if (routeOrigin.equals(origin) && routeDay.equals(date))
+            if (routeOrigin.equals(origin) && routeDay.equals(date) && routeDestiny.equals(destiny))
             {
-                if (routeDestiny.equals(destiny))
-                {
-                    List<Route> flight = new ArrayList<Route>();
-                    flight.add(route);
-                    flights.add(flight);
-                }
-                //verifica se ha outra rota que o leve ao local pretendido
-                else if (conexao)
-                {
-                    //tempo maximo de espera entre conexoes
-                    //fazer logica para buscar mais de uma conexao
-                    //List<List<Route>> conexionRoutes = getConexionFlights(routeDestiny,destiny,route.getLandTime(),tempoMax,routes);
-                    //a logica abaixo so pegara uma conexao no maximo
-                    for (Route connectionRoute : routes)
-                    {
-                        String secRouteOrigin = connectionRoute.getOrigin();
-                        String secRouteDestiny = connectionRoute.getDestiny();
-                        
-                        if (secRouteOrigin.equals(routeDestiny) && secRouteDestiny.equals(destiny))
-                        {
-                            List<Route> flight = new ArrayList<Route>();
-                            flight.add(route);
-                            flight.add(connectionRoute);
-                            flights.add(flight);
-                        }
-                    }
-                    
-                }
+                routesFlight.add(route);
             }
         }
-        
-        return flights;
+        return routesFlight;
     }
     
     private static List<List<Route>> getConnectionFlights(String origin, String destiny, GregorianCalendar landTime, int tempoMax, List<Route> routes)
@@ -109,41 +81,47 @@ public class SimulateDB
         List<Route> routes = new ArrayList<Route>();
         List<Airplane> airplanes = new ArrayList<Airplane>();
         List<Seat> seats = new ArrayList<Seat>();
+        List<Airport> airports = new ArrayList<Airport>();
         
-        seats.add(new Seat("","AC",SeatCategory.FIRST_CLASS));
-        seats.add(new Seat("","EA",SeatCategory.FIRST_CLASS));
-        seats.add(new Seat("","DF",SeatCategory.ECONOMY));
-        seats.add(new Seat("","IO",SeatCategory.ECONOMY));
+        seats.add(new Seat("AC",SeatCategory.FIRST_CLASS));
+        seats.add(new Seat("EA",SeatCategory.FIRST_CLASS));
+        seats.add(new Seat("DF",SeatCategory.ECONOMY));
+        seats.add(new Seat("IO",SeatCategory.ECONOMY));
         
         airplanes.add(new Airplane(1,seats,"American Airlines","ATY-3456",new GregorianCalendar(2010,9,1,6,30)));
         
-        routes.add(new Route(1,"GIG","Miami",new GregorianCalendar(2016,10,15,20,30),new GregorianCalendar(2016,10,16,6,30),airplanes.get(0)));
-        routes.add(new Route(2,"Miami","New York",new GregorianCalendar(2016,10,16,8,30),new GregorianCalendar(2016,10,16,12,30),airplanes.get(0)));
-        routes.add(new Route(3,"GIG","Charlotte",new GregorianCalendar(2016,10,15,19,30),new GregorianCalendar(2016,10,16,4,30),airplanes.get(0)));
-        routes.add(new Route(4,"Charlotte","Boston",new GregorianCalendar(2016,10,16,9,30),new GregorianCalendar(2016,10,16,12,30),airplanes.get(0)));
+        airports.add(new Airport("GIG","Rio de Janeiro"));
+        airports.add(new Airport("MIA","Miami"));
+        airports.add(new Airport("BUE","Buenos Aires"));
+        
+        routes.add(new Route(1,airports.get(0),airports.get(1),new GregorianCalendar(2016,10,15,20,30),new GregorianCalendar(2016,10,16,6,30),airplanes.get(0)));
+        routes.add(new Route(2,airports.get(1),airports.get(2),new GregorianCalendar(2016,10,16,8,30),new GregorianCalendar(2016,10,16,12,30),airplanes.get(0)));
+        //routes.add(new Route(3,"GIG","Charlotte",new GregorianCalendar(2016,10,15,19,30),new GregorianCalendar(2016,10,16,4,30),airplanes.get(0)));
+        //routes.add(new Route(4,"Charlotte","Boston",new GregorianCalendar(2016,10,16,9,30),new GregorianCalendar(2016,10,16,12,30),airplanes.get(0)));
 
         return routes;
     }
-       
+    
+    /*
     public List<Flight> getBoughtFlights()
     {
         List<Route> routes = retrieveRoutes();
-        List<Flight> flights = new ArrayList<Flight>();
+        List<Flight> routesFlight = new ArrayList<Flight>();
         List<RouteFlight> routeFlights = new ArrayList<RouteFlight>();
         
         routeFlights.add(new RouteFlight(routes.get(0),routes.get(0).getAirplane().getSeats().get(0),1));
         routeFlights.add(new RouteFlight(routes.get(1),routes.get(1).getAirplane().getSeats().get(0),2));
         
-        flights.add(new Flight(routeFlights,1));
+        routesFlight.add(new Flight(routeFlights,1));
         
-        return flights;
+        return routesFlight;
     }
-    
+    */
 //    public List<Flight> getBoughtFlights(Route route)
 //    {
-//        List<Flight> flights = getBoughtFlights();
+//        List<Flight> routesFlight = getBoughtFlights();
 //        
-//        for(Flight flight : flights)
+//        for(Flight flight : routesFlight)
 //        {
 //            if(flight.getRoutes())
 //        }
